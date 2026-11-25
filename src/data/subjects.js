@@ -5,7 +5,7 @@ export const subjects = [
   {
     id: 'constitutional-law',
     slug: 'constitutional-law',
-    title: 'Constitutional Law',
+    title: 'Constitutional LaW',
     icon: 'Scale',
     description: 'Landmark judgments interpreting India\'s Constitution, Fundamental Rights, the Basic Structure Doctrine, and judicial review.',
   },
