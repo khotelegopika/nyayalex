@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS — Dark mode defaults
+═══════════════════════════════════════════════════ */
+:root {
+  --color-charcoal: 18 21 26;        /* #12151A – page background */
+  --color-navy:     16 28 44;        /* #101C2C – card / section background */
+  --color-surface:  25 38 56;        /* #192638 – elevated surface */
+  --color-ivory:    248 245 239;     /* #F8F5EF – primary text */
+  --color-slate:    198 204 214;     /* #C6CCD6 – secondary body text */
+  --color-gold:     204 170 105;     /* #CCAA69 – accent */
+  --color-gold-light: 222 192 132;
+  --color-gold-dark:  166 132 70;
+  --color-border:   255 255 255;     /* white → borders are white-tinted at low opacity */
+  --btn-primary-text: 16 28 44;
+}
+
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS — Light mode overrides
+   Applied when <html class="light">
+═══════════════════════════════════════════════════ */
+html.light {
+  --color-charcoal: 240 236 228;     /* #F0ECE4 – warm parchment page bg */
+  --color-navy:     255 255 255;     /* #FFFFFF – white card/section bg */
+  --color-surface:  228 222 210;     /* #E4DED2 – elevated surface */
+  --color-ivory:    14 24 40;        /* #0E1828 – near-black ink for primary text */
+  --color-slate:    52 62 78;        /* #343E4E – dark slate for body text */
+  --color-gold:     148 108 36;      /* #946C24 – deep antique gold, AA-compliant */
+  --color-gold-light: 174 130 54;
+  --color-gold-dark:  118 82 20;
+  --color-border:   14 24 40;        /* dark border on light backgrounds */
+  --btn-primary-text: 255 255 255;
+}
+
+/* ═══════════════════════════════════════════════════
+   BASE STYLES
+═══════════════════════════════════════════════════ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Inter', 'Manrope', sans-serif;
+    background-color: rgb(var(--color-charcoal));
+    color: rgb(var(--color-ivory));
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  ::selection {
+    background-color: rgb(var(--color-gold));
+    color: rgb(var(--btn-primary-text));
+  }
+  select option {
+    background-color: rgb(var(--color-navy));
+    color: rgb(var(--color-ivory));
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   COMPONENT CLASSES
+═══════════════════════════════════════════════════ */
+@layer components {
+  .gold-separator {
+    @apply w-16 h-px bg-gold mx-auto my-6;
+  }
+  .gold-separator-left {
+    @apply w-16 h-px bg-gold my-6;
+  }
+
+  .btn-primary {
+    background-color: rgb(var(--color-gold));
+    color: rgb(var(--btn-primary-text));
+    @apply inline-flex items-center gap-2 px-6 sm:px-8 py-3 font-semibold font-body tracking-widest text-xs uppercase transition-all duration-300 hover:bg-gold-light hover:shadow-lg;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 sm:px-8 py-3 border border-gold text-gold font-semibold font-body tracking-widest text-xs uppercase transition-all duration-300 hover:bg-gold/10;
+  }
+  .btn-outline-white {
+    @apply inline-flex items-center gap-2 px-6 sm:px-8 py-3 text-ivory font-semibold font-body tracking-widest text-xs uppercase transition-all duration-300 hover:bg-gold/10 hover:text-gold;
+    border: 1px solid rgb(var(--color-border) / 0.35);
+  }
+  .btn-outline-white:hover {
+    border-color: rgb(var(--color-gold));
+  }
+
+  .section-label {
+    @apply text-gold font-body text-xs tracking-widest uppercase font-semibold;
+  }
+
+  /* Cards — raw CSS borders to avoid @apply opacity-suffix Tailwind 3 bug */
+  .case-card {
+    @apply bg-navy p-5 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5;
+    border: 1px solid rgb(var(--color-border) / 0.14);
+  }
+  .case-card:hover {
+    border-color: rgb(var(--color-gold) / 0.5);
+    box-shadow: 0 8px 30px rgb(var(--color-navy) / 0.15);
+  }
+  .subject-card {
+    @apply bg-navy p-5 sm:p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5 cursor-pointer;
+    border: 1px solid rgb(var(--color-border) / 0.14);
+  }
+  .subject-card:hover {
+    border-color: rgb(var(--color-gold) / 0.6);
+  }
+
+  /* Form inputs */
+  .input-field {
+    @apply w-full px-4 py-3 font-body text-sm focus:outline-none transition-all duration-200;
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border) / 0.22);
+    color: rgb(var(--color-ivory));
+  }
+  .input-field::placeholder {
+    color: rgb(var(--color-slate) / 0.7);
+  }
+  .input-field:focus {
+    border-color: rgb(var(--color-gold));
+  }
+
+  .tag {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-body font-medium border;
+  }
+  .tag-gold {
+    @apply tag border-gold/50 text-gold bg-gold/10;
+  }
+  .tag-blue {
+    @apply tag border-blue-400/40 text-blue-400 bg-blue-400/10;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO OVERLAY — adapts to dark / light mode
+═══════════════════════════════════════════════════ */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 18, 30, 0.82) 0%,
+    rgba(10, 18, 30, 0.76) 50%,
+    rgba(10, 18, 30, 0.94) 100%
+  );
+}
+html.light .hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(240, 236, 228, 0.90) 0%,
+    rgba(240, 236, 228, 0.85) 50%,
+    rgba(240, 236, 228, 0.97) 100%
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════ */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+.scroll-indicator {
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════
+   SEARCH HIGHLIGHT
+═══════════════════════════════════════════════════ */
+.search-highlight {
+  background-color: rgba(204, 170, 105, 0.28);
+  color: rgb(var(--color-gold));
+  font-weight: 600;
+  border-radius: 2px;
+  padding: 0 2px;
+}
